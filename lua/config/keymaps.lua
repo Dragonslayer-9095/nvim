@@ -3,23 +3,14 @@
 -- Add any additional keymaps here
 
 -- vim.keymap.set("n", "<leader>e", "<cmd>Neotree reveal<cr>", { desc = "Reveal current file in Neo-tree" })
-vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true })
-vim.keymap.set("v", "jk", "<Esc>", { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>to", function()
-  require("cmp").setup.buffer({
-    sources = {
-      { name = "ollama" },
-    },
-  })
-  print("💻 Switched to Ollama (DeepSeek)")
-end, { desc = "Toggle Ollama Completions" })
-
-vim.keymap.set("n", "<leader>tc", function()
-  require("cmp").setup.buffer({
-    sources = {
-      { name = "copilot" },
-    },
-  })
-  print("☁️ Switched to Copilot")
-end, { desc = "Toggle Copilot Completions" })
+vim.keymap.set("n", "<leader>ct", function()
+  vim.cmd("0r ~/.config/nvim/templates/cp.cpp")
+  vim.defer_fn(function()
+    vim.fn.search("// cursor", "cw")
+    vim.cmd("normal! dd")
+    vim.cmd("normal! zz^")
+    vim.cmd("normal! O\t")
+    vim.cmd("startinsert")
+  end, 10)
+end, { desc = "Insert CP template" })
